@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  动态代理规则：
+                1：namespace必须是接口的全路径名
+                2：接口的方法名必须与sql的id一致
+                3：接口的入参必须与parameterType类型一致
+                4：接口的返回值必须与resultType类型一致
+  -->
+<mapper namespace="indi.zx.mall.mapper.AdminMapper">
+    <select id="login" parameterType="indi.zx.mall.pojo.Admin" resultType="indi.zx.mall.pojo.Admin">
+        select * from admins where admins=#{admins} and password=#{password}
+    </select>
+</mapper>

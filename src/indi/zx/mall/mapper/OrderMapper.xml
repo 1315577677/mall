@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  动态代理规则：
+                1：namespace必须是接口的全路径名
+                2：接口的方法名必须与sql的id一致
+                3：接口的入参必须与parameterType类型一致
+                4：接口的返回值必须与resultType类型一致
+  -->
+<mapper namespace="indi.zx.mall.mapper.OrderMapper">
+    <select id="getOrderInfo" parameterType="indi.zx.mall.pojo.Query" resultType="indi.zx.mall.pojo.Orders">
+        select
+        o.product_id,
+        o.create_date,
+        o.status,
+        o.ordernum,
+        u.username,
+        u.address,
+        p.name,
+        p.price
+        from orders o left join product p on o.product_id = p.product_ID
+        left join  user u on user_id=u.id
+        <where>
+            <if test="custName!=null and custName!=''">
+              and  o.ordernum=#{custName}
+            </if>
+            <if test="stutas!=null and stutas!=''">
+               and o.status=#{stutas}
+            </if>
+        </where>
+        <if test="page!=null">
+            limit #{page},#{size}
+        </if>
+
+    </select>
+    <select id="getCount" parameterType="indi.zx.mall.pojo.Query" resultType="int">
+        select count(*) from orders
+        <where>
+            <if test="custName!=null and custName!=''">
+              and  ordernum=#{custName}
+            </if>
+            <if test="stutas!=null and stutas!=''">
+               and status=#{stutas}
+            </if>
+        </where>
+    </select>
+    <update id="changeStutas" >
+        update  orders set status=#{1} where ordernum=#{0}
+    </update>
+    <select id="getCountByStutas" parameterType="int" resultType="int">
+        select count(*) from orders where status =#{i};
+    </select>
+</mapper>

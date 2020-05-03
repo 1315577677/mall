@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  动态代理规则：
+                1：namespace必须是接口的全路径名
+                2：接口的方法名必须与sql的id一致
+                3：接口的入参必须与parameterType类型一致
+                4：接口的返回值必须与resultType类型一致
+  -->
+<mapper namespace="indi.zx.mall.mapper.ProductMapper">
+    <sql id="filter">
+        <if test="custName!=null and custName!=''">
+            and pt.name like '%${custName}%'
+        </if>
+        <if test="custSource!=null and custSource!=''">
+            and pt.categoryid = #{custSource}
+        </if>
+    </sql>
+    <select id="getPageInfo" parameterType="indi.zx.mall.pojo.Query" resultType="indi.zx.mall.pojo.Product">
+
+select
+    pt. product_ID,
+    pt.name,
+    pt.price,
+    pt.described,
+    pt.inventory,
+    c.category,
+    pt.categoryid,
+    pt.size
+from product pt
+    left join category c on pt.categoryid=c.id
+<where>
+    <include refid="filter"/>
+</where>
+<if test="page!=null">
+    limit #{page},#{size}
+</if>
+
+    </select>
+    <select id="getCount" parameterType="indi.zx.mall.pojo.Query" resultType="int">
+    select count(*) from product as pt
+        <where>
+            <include refid="filter"/>
+        </where>
+    </select>
+    <select id="getfromType"  resultType="indi.zx.mall.pojo.Category">
+    select * from category
+ </select>
+    <delete id="deleteProductByid" parameterType="string">
+        delete from product where product_ID=#{id}
+    </delete>
+
+<!--    Product getProductById(String id);-->
+
+<!--    List getPicturePathById(String id);-->
+    <select id="getProductById" parameterType="string" resultType="indi.zx.mall.pojo.Product">
+        select
+                pt. product_ID,
+                pt.name,
+                pt.price,
+                pt.described,
+                pt.inventory,
+                c.category,
+                pt.categoryid,
+                pt.size
+        from product pt
+                left join category c on pt.categoryid=c.id
+                where pt. product_ID=#{id}
+    </select>
+    <select id="getPicturePathById" resultType="string" parameterType="string">
+        select path from picture where id=#{id}
+    </select>
+    <insert id="insertPicture" parameterType="string" >
+        insert into picture set path=#{0} , id=#{1};
+    </insert>
+    <update id="updateProduct" parameterType="indi.zx.mall.pojo.Product">
+        update product set name=#{name},price=#{price},described=#{described},inventory=#{inventory},size=#{size}
+        <if test="categoryid!=null and categoryid!=''">
+            , categoryid=#{categoryid}
+        </if>
+         WHERE product_ID=#{product_ID}
+    </update>
+    <delete id="deletePictureByName" parameterType="string">
+            delete from picture where path=#{name}
+    </delete>
+    <insert id="addProduct" parameterType="indi.zx.mall.pojo.Product" >
+        insert into product set name=#{name},
+                            size=#{size},
+                            price=#{price},
+                            described=#{described},
+                            inventory=#{inventory},
+                            categoryid=#{categoryid},
+                            product_ID=#{product_ID}
+    </insert>
+</mapper>

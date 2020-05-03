@@ -1,0 +1,179 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+.img-square{
+
+  width:160px;
+  height:130px;
+
+}
+.imageDiv {
+  display:inline-block;
+  width:160px;
+  height:130px;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+  border:1px dashed darkgray;
+  background:#f8f8f8;
+  position:relative;
+  overflow:hidden;
+  margin:10px
+}
+.cover {
+  position:absolute;
+  z-index:1;
+  top:0;
+  left:0;
+  width:160px;
+  height:130px;
+  background-color:rgba(0,0,0,.3);
+  display:none;
+  line-height: 125px;
+  text-align:center;
+  cursor:pointer;
+}
+.cover .delbtn {
+  color:red;
+  font-size:20px;
+}
+.imageDiv:hover .cover {
+  display:block;
+}
+.addImages {
+  display:inline-block;
+  width:160px;
+  height:130px;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+  border:1px dashed darkgray;
+  background:#f8f8f8;
+  position:relative;
+  overflow:hidden;
+  margin:10px;
+}
+.text-detail {
+  margin-top:40px;
+  text-align:center;
+}
+.text-detail span {
+  font-size:40px;
+}
+.file {
+  position:absolute;
+  top:0;
+  left:0;
+  width:160px;
+  height:130px;
+  opacity:0;
+}
+.closeLayer {
+
+  /*display: none;*/
+  z-index: 99;
+  position: absolute; /*绝对定位*/
+  width: 15px;
+}
+/*border: 1px solid red;*/
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
